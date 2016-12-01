@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>添加机房</title>
+</head>
+<body>
+	<form action="/machine_room/save/" method="get">
+		{% if error %}
+			<span style="color:red">{{error}}</span>
+		{% endif %}
+		<label>机房名称:</label><input type="text" name="name" values="{{name}}"/>
+		<label>机房地址:</label><input type="text" name="addr" values="{{addr}}"/>
+		<label>IP网段:</label><input type="text" name="ip_ranges" values="{{ip_ranges}}"/>
+		<input type="submit" value="添加"/>
+
+	</form>
+</body>
+</html>

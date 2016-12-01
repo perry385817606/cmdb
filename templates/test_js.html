@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>javascript</title>
+</head>
+<body>
+
+	<div>div1</div>
+	<div id="mydivid">div2</div>
+	<div class="mydivclass">div3</div>
+
+	<input type="text" value="" id="a" /> +
+	<input type="text" value="" id="b" /> =
+	<input type="text" value="" id="c" />
+	<input type="button" value="a+b=?" onclick="add();"/>
+	<input type="button" value="a+b=?" class="calc_btn"/>
+
+	
+	<script type="text/javascript" src="jquery-2.1.1.js"></script>
+	<script type="text/javascript">
+	jQuery('.calc_btn').on('click', function() {
+		//jQuery('#c').val(parseInt(jQuery('#a').val()) + parseInt(jQuery('#b').val()));
+		$('#c').val(parseInt($('#a').val()) + parseInt($('#b').val()));
+	})
+
+	console.log(jQuery);
+
+
+	function add() {
+		var a = document.getElementById('a').value;
+		var b = document.getElementById('b').value;
+		if (isNaN(a) || isNaN(b)) {
+			return;
+		}
+		document.getElementById('c').value = parseInt(a) + parseInt(b)
+		
+	}
+	/*
+	console.log(document.getElementById('mydivid'));
+	console.log(document.getElementsByName('mydivclass'));
+	console.log(document.getElementsByTagName('div'));
+	*/
+	/*
+		javascript语法
+		//字符串
+		var name="perry";
+		var lange = "javascript";
+		//数字
+		var age = 29;
+		var height = 1.68;
+		//boolean
+		var isMan = false;
+		!isMan;  //not
+		true || false; //or
+		true && true; //and
+		//None
+		null;
+		//dict(javascript中叫object)
+		var scores = {'kk': 80,'pp':90,'xiao':99};
+		scores['kk'];
+		scores['pc'];
+		scores['qq'] = 101;
+		delete scores['xiao'];
+		console.log(scores);
+
+		//list ==> array
+		var nums =['True', false,[0,1,2],'fj'];
+		console.log(nums);
+		//流程控制
+		var num = 2;
+		if(num > 5){
+			console.log('>5');
+		}
+
+		if(num > 5){
+			console.log('>5');
+		} else{
+			console.log('<=5');
+		}
+
+		if(num > 5){
+			console.log('>5');
+		} else if(num == 5){
+			console.log('=5');
+		} else{
+			console.log('<5');
+		}
+
+		//while循环
+		while(num < 10){
+			console.log(num);
+			num += 1;
+		}
+
+		//for循环
+		for (var i = 0; i < 10; i+=1){
+			console.log(i);
+		}
+		for (var i = 0; i < nums.length; i+=1){
+			console.log(nums[i]);
+		}
+		console.log('-----------------------')
+		for (key in scores){
+			console.log(key,'----->',scores[key]);
+		}
+		console.log("5"+2); // 结果为52
+
+		//函数function
+		function print_hello() {
+			console.log('hello world!');
+		}
+		print_hello();
+
+		function print_hello_var(name) {
+			console.log('hello '+name);
+		}
+		print_hello_var('javascript');
+		print_hello_var('python');
+
+		function add(m,n){
+			return m + n;
+		}
+		console.log(add(2,3));
+		test = add(22,33);
+		console.log(test);
+
+		//cmp = lambda x,y: x>y
+		var cmp = function(x,y) {
+			return x > y;
+		}
+		console.log(cmp(1,2)); //输出为false
+		console.log(cmp(11,2)); //输出为True
+		*/
+	</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>日志</title>
+</head>
+<body>
+	<a href="/logout/">退出</a>
+	<br>
+	<a href="/log/?topn=10">TOP10</a>
+	<a href="/log/?topn=20">TOP20</a>
+	<a href="/log/?topn=30">TOP30</a>
+	<a href="/log/?topn=40">TOP40</a>
+<table border="1">
+	<thead>
+		<tr>
+			<th>IP</th>
+			<th>URL</th>
+			<th>CODE</th>
+			<th>COUNT</th>
+		</tr>
+	</thead>
+	<tbody>
+		{%for line in log %}
+		<tr>
+			<td>{{line[0][0]}}</td>
+			<td>{{line[0][1]}}</td>
+			<td>{{line[0][2]}}</td>
+			<td>{{line[1]}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+</body>
+</html>

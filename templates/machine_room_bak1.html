@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>机房管理</title>
+</head>
+<body>
+	<a href="/machine_room/add/">添加机房</a>
+	<br>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>机房名称</th>
+				<th>机房地址</th>
+				<th>IP网段</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for room in machine_room %}
+			<tr>
+				<td>{{room['id']}}</td>
+				<td>{{room['name']}}</td>
+				<td>{{room['addr']}}</td>
+				<td>{{room['ip_ranges']}}</td>
+				<td>
+					<a href="/machine_room/view/?id={{room['id']}}">编辑</a>
+					<a href="/machine_room/delete/?id={{room['id']}}">删除</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</body>
+</html>

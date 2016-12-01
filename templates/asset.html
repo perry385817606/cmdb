@@ -1,0 +1,615 @@
+{% extends "layout.html" %}
+
+{% block title %}CMDB 资产管理 {% endblock %}
+
+{% block link %}
+    <!-- Data Tables -->
+    <link href="/static/sfv/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/static/sfv/css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet">
+    <link href="/static/sfv/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
+    <link href="/static/slider/css/bootstrap-slider.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/static/sfv/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <link href="/static/sfv/css/animate.css" rel="stylesheet">
+    <link href="/static/sfv/css/style.css" rel="stylesheet">
+
+    <link href="/static/bootstrap-datepicker-1.6.4/dist/css/bootstrap-datepicker3.css" rel="stylesheet">
+{% endblock %}
+
+{% block nav_assets %}class="active"{% endblock %}
+{% block nav_asset_list %}class="active"{% endblock %}
+{% block breadcrumb %}
+    <li>
+        <a href="javascript:void(0)">资产</a>
+    </li>
+    <li class="active">
+        <strong>资产管理</strong>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <!-- <a href="/user/add/" class="btn btn-primary active" role="button">添加资产</a> -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_dialog">
+      添加资产(dialog)
+    </button>
+
+ 
+
+<!--     <a href="/log/" class="btn btn-primary active" role="button">查看日志</a>
+    <a href="/machine_room" class="btn btn-primary active" role="button">查看机房</a> -->
+    <br><br>
+    <table class="assets table table-striped table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<!-- <th>ID</th> -->
+    			<th>SN</th>
+    			<th>主机名/IP</th>
+                <th>OS</th>
+                <th>资源</th>
+                <th>使用者</th>
+                <th>业务</th>
+                <th>机房</th>
+                <th>上架/过保时间</th>
+                <th>厂商/型号</th>
+                <th>状态</th>
+    			<th>操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    	</tbody>
+    </table>	
+
+   <!-- Modal -->
+    <div class="modal fade" id="create_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">资产创建</h4>
+          </div>
+          <div class="modal-body">
+
+          <!-- 资产创建表单 -->
+            <form method="post" class="create_form form-horizontal">
+                <input type="hidden" name="id" value=""/>
+                <div class="form-group"><label class="col-sm-2 control-label">SN:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="sn" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">主机名:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="hostname" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">IP:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="ip" value=""/>
+                    </div>
+                </div>
+ 
+                 <div class="form-group"><label class="col-sm-2 control-label">操作系统:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="os" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">cpu:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="cpu" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">内存:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="ram" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">磁盘:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="disk" value=""/>
+                    </div>
+                </div>
+ 
+                 <div class="form-group"><label class="col-sm-2 control-label">使用者:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="admin" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">业务:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="buiness" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">机房:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="machine_room_id">
+                        {% for room in machine_rooms %}
+                        <option value="{{room['id']}}">{{room['name']}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">上架时间:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" type="text" name="time_on_shelves" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">过保时间:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" type="text" name="over_guaranteed_date" value=""/>
+                    </div>
+                </div>
+
+               <div class="form-group"><label class="col-sm-2 control-label">厂商:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="vendor" value=""/>
+                    </div>
+                </div>
+
+               <div class="form-group"><label class="col-sm-2 control-label">型号:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="model" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">状态:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="machine_room_id">
+                        <option value="1">维护</option>
+                        <option value="0">使用</option>
+                        </select>
+                    </div>
+                </div>
+
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary create_btn">创建</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 资产编辑dialog -->
+   <!-- Modal -->
+    <div class="modal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">资产编辑</h4>
+          </div>
+          <div class="modal-body">
+            
+            
+          
+            <form method="post" class="edit_form form-horizontal">
+                <input type="hidden" name="id" value=""/>
+                <div class="form-group"><label class="col-sm-2 control-label">SN:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="sn" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">主机名:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="hostname" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">IP:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="ip" value=""/>
+                    </div>
+                </div>
+ 
+                 <div class="form-group"><label class="col-sm-2 control-label">操作系统:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="os" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">cpu:</label>
+                    <div class="col-sm-10">
+                        <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0"
+                         data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+                        <input type="text" class="form-control" type="text" name="cpu" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">内存:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="ram" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">磁盘:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="disk" value=""/>
+                    </div>
+                </div>
+ 
+                 <div class="form-group"><label class="col-sm-2 control-label">使用者:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="admin" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">业务:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="buiness" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">机房:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="machine_room_id">
+                         {% for room in machine_rooms %}
+                        <option value="{{room['id']}}">{{room['name']}}</option>
+                        {% endfor %}
+                        </select>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">上架时间:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" type="text" name="time_on_shelves" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">过保时间:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" type="text" name="over_guaranteed_datek" value=""/>
+                    </div>
+                </div>
+
+               <div class="form-group"><label class="col-sm-2 control-label">厂商:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="vendor" value=""/>
+                    </div>
+                </div>
+
+               <div class="form-group"><label class="col-sm-2 control-label">型号:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" type="text" name="model" value=""/>
+                    </div>
+                </div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">状态:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="machine_room_id">
+                        <option value="1">维护</option>
+                        <option value="0">使用</option>
+                        </select>
+                    </div>
+                </div>
+
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary btn_edit_save">更新</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="dialog_monitor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">资产监控</h4>
+      </div>
+      <div class="modal-body">
+        <div id="container" style="height: 400px; width:560px; margin: 0 auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="/static/sfv/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="/static/sfv/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="/static/sfv/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="/static/sfv/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+    <script src="/static/slider/js/bootstrap-slider.js"></script>
+    <!-- Sweet alert -->
+    <script src="/static/sfv/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <script src="/static/Highcharts-5.0.2/code/highcharts.js"></script>
+    <script src="/static/Highcharts-5.0.2/code/modules/exporting.js"></script>
+
+    <script src="/static/bootstrap-datepicker-1.6.4/dist/js/bootstrap-datepicker.js"></script>
+{% endblock %}
+
+{% block js %}
+jQuery(document).ready(function() {
+
+
+    var table = jQuery('.assets').dataTable({
+        responsive: true,
+        "dom": 'T<"clear">lfrtip',
+        "tableTools": {
+            "sSwfPath": "/static/sfv/js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
+        },
+        "ajax" : "/assets/list/",
+        "columns" : [
+            {"data" : "sn"},
+            {"data" : function(row) {
+                var el = [];
+                el.push(row['hostname']);
+                el.push(row['ip']);
+                return el.join('/');
+                }
+            },
+
+            {"data" : "os"},
+
+            {"data" : function(row) {
+                var elements = [];
+                elements.push('CPU:' + row['cpu'] + '核');
+                elements.push('内存:' + row['ram'] + 'G');
+                elements.push('磁盘:' + row['disk'] + 'G');
+                return elements.join('/');
+                }
+            },
+
+            {"data" : "admin"},
+
+            {"data" : "buiness"},
+
+            {"data" : "machine_room_id"},
+
+            {"data" : function(row) {
+                var elements = [];
+                elements.push(row['time_on_shelves']);
+                elements.push(row['over_guaranteed_date']);
+                return elements.join('/');
+                }
+            },
+
+            {"data" : function(row) {
+                var elements = [];
+                elements.push(row['vendor']);
+                elements.push(row['model']);
+                return elements.join(' ');
+                }
+            },
+
+            {"data" : function(row) {
+                return row['status'] == 1 ? '维护' : '使用';      //三目表达式
+                // return '维护' if row['status'] == 1 else '使用'   //python中的写法
+                }
+            },
+
+            {"data" : function(row) {
+                var elements = [];
+                elements.push('<a class="btn_monitor" data-id="' + row['id'] + '" href="javascript:void(0)"><i class="fa fa-eye"></i></a>');
+
+                elements.push('<a class="btn_edit" data-id="' + row['id'] + '" href="javascript:void(0)"><i class="fa fa-edit"></i></a>');
+
+                elements.push('<a class="btn_delete" data-id="' + row['id'] + '" href="javascript:void(0)"><i class="fa fa-trash"></i></a>');
+                return elements.join(' ');
+                }
+            }
+        ]
+
+    });
+
+    jQuery('.create_btn').on('click',function() {
+        jQuery.post('/asset/save/json/',
+            jQuery('.create_form').serializeArray(),
+                function(data){
+                    if(data['code'] === 200) {
+                        //window.location.reload();
+                        jQuery('#create_dialog').modal('hide');
+                        table.api().ajax.reload();
+                        swal({
+                            title: '添加成功',
+                            text: "",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        });
+                        
+
+                    } else if(data['code'] === 400) {
+                        //alert(data['error']);
+                        swal({
+                            title: data['error'],
+                            text: "",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        });
+
+                    }
+                },'json');
+
+    });
+
+    //下面是jQuery的2种写法，一种适用于有选择器，第2种适用于没选择器的
+    jQuery('.assets').on('click','.btn_delete',function() {
+        //发起请求
+        //alert('删除' + jQuery(this).data('id'));
+        var that = this;
+        swal({
+            title: "确认删除?",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认删除!",
+            closeOnConfirm: false
+        }, function () {
+            jQuery.get('/asset/delete/',
+                {'id' : jQuery(that).data('id')},
+                function(response) {
+                   swal({
+                      title :'删除成功',
+                      type: "success"
+                    });
+                    table.api().ajax.reload();
+                },
+            'json');
+        });
+    });
+
+
+    jQuery('.assets').on('click','.btn_edit',function() {
+        //发起请求
+        //alert('编辑' + jQuery(this).data('id'));
+
+        jQuery.get('/asset/view/',
+            {'id' : jQuery(this).data('id')},
+            function(response) {
+                //console.log(response);
+                for (var key in response) {
+                    jQuery('[name=' + key + ']').val(response[key]);
+                }
+                jQuery('#edit_dialog').modal('show');
+            },
+            'json');
+            //jQuery('#edit_dialog').modal('show');
+
+        //打开dialog;
+        jQuery('#edit_dialog').modal('show')
+    });
+
+
+    jQuery('.btn_edit_save').on('click',function() {
+        var params = jQuery('.edit_form').serializeArray();
+        jQuery.post('/asset/modify/',params, function(response) {
+            console.log(response);
+            if(response['error'] == '') {
+                jQuery('#edit_dialog').modal('hide');
+                table.api().ajax.reload();
+            } else {
+                alert(response['error']);
+            }
+        },
+        'json');
+    });
+
+
+    jQuery('.assets').on('click', '.btn_monitor', function() {
+        //alert('监控' + jQuery(this).data('id'));
+        jQuery.get('/monitor/host/list/',
+            {'id':jQuery(this).data('id')},
+            function(response) {
+                //console.log(response);
+                if(response['code'] == 200) {
+                    var result = response['result'];
+                    Highcharts.chart('container', {
+                        title: {
+                            text: 'Monthly Average Temperature',
+                            x: -20 //center
+                        },
+                        subtitle: {
+                            text: 'CPU、内存、磁盘监控',
+                            x: -20
+                        },
+                        xAxis: {
+                            categories: result['categories']
+                        },
+                        yAxis: {
+                            title: {
+                                text: '使用率(%)'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: '%'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: result['series']
+                    });
+                    jQuery('#dialog_monitor').modal('show');
+                }
+            },
+            'json');
+        
+    });
+
+
+
+    $('#ex1').slider({
+        formatter: function(value) {
+            return 'Current value: ' + value;
+        }
+    });
+
+});
+{% endblock %}                var result = response['result'];
+                
+
+                Highcharts.chart('container', {
+                    title: {
+                        text: 'Monthly Average Temperature',
+                        x: -20 //center
+                    },
+                    subtitle: {
+                        text: 'CPU、内存、磁盘监控',
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: result['categories']
+                    },
+                    yAxis: {
+                        title: {
+                            text: '使用率(%)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        valueSuffix: '%'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: result['series']
+                });
+                jQuery('#dialog_monitor').modal('show');

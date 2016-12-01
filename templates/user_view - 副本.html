@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CMDB| 编辑用户</title>
+
+    <link href="/static/sfv/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/sfv/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/static/sfv/css/animate.css" rel="stylesheet">
+    <link href="/static/sfv/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- <div id="wrapper"> -->
+
+<!-- <nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle" src="/static/sfv/img/profile_small.jpg" />
+                             </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
+                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="contacts.html">Contacts</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li>
+                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="index.html">Dashboard v.1</a></li>
+                    <li><a href="dashboard_2.html">Dashboard v.2</a></li>
+                    <li><a href="dashboard_3.html">Dashboard v.3</a></li>
+                    <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
+                </ul>
+            </li>
+
+    </div>
+</nav> -->
+
+<div id="page-wrapper" class="gray-bg">
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <span class="m-r-sm text-muted welcome-message">Welcome to CMDB</span>
+            </li>
+ 
+            <li>
+                <a href="/logout/">
+                    <i class="fa fa-sign-out"></i> 退出
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+</div>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <ol class="breadcrumb">
+            <li>
+            <br>
+                <a href="javascript:void(0)">用户</a>
+            </li>
+            <li class="active">
+                <strong>编辑用户</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<!--     <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content text-center p-md">
+
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+
+			   	<form role="form" action="/user/modify/" method="post">
+			   	<div class="form-group">
+					{% if error %}
+						<span style="color:red">{{error}}</span>
+					{% endif %}
+					<input type="hidden" name="id" value="{{id}}"/>
+					<label>用户名:</label><input form-control type="text" name="username" values="{{username}}"/><br>
+					<label>年龄:</label><input form-control type="text" name="age" values="{{age}}"/><br>
+
+			 
+					<!-- /* 下拉框 */ -->
+					<label>部门:</label>
+					<select name="department">
+						<option value="1">研发部门</option>
+						<option value="2">测试部门</option>
+						<option value="3" selected="selected">运维部门</option>
+					</select>
+					<br>
+
+					<!-- /* 单选框 */ -->
+					<label>性别:</label>
+					<input type="radio" name="sex" value="1" checked="checkd" />男
+					<input type="radio" name="sex" value="0"/>女<br>
+
+
+					<!-- /* 复选框 */ -->
+					<label>爱好:</label>
+					<input type="checkbox" name="hobby" value="football" />足球
+					<input type="checkbox" name="hobby" value="basketball" />篮球
+					<input type="checkbox" name="hobby" value="pingpong" checked="checked" />乒乓球
+					<br>
+
+					<label>简介:</label>
+					<textarea name="detail">XXXXXXXXXXX</textarea><br>
+
+				<!-- 	<label>头像:</label>
+					<input type="file" name="icon"><br> -->
+
+					<label>主页:</label>
+					<input type="url" name="homepage" value="" /><br>
+					<label>生日:</label>
+					<input type="date" name="birthday"value="" /><br>
+					<label>email:</label>
+					<input type="email" name="email" value="" /><br> 
+					
+					<input type="submit" value="保存">
+				</div>
+				</form>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+<div class="footer" >
+    <div>
+        <strong>Copyright</strong> CMDB by fj &copy; 2016-2020
+    </div>
+</div>
+
+</div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script src="/static/sfv/js/jquery-2.1.1.js"></script>
+<script src="/static/sfv/js/bootstrap.min.js"></script>
+<script src="/static/sfv/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/static/sfv/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="/static/sfv/js/inspinia.js"></script>
+<script src="/static/sfv/js/plugins/pace/pace.min.js"></script>
+
+<script src="/static/sfv/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+
+
+    });
+</script>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- #######################################分隔线####################################### -->
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用户编辑</title>
+</head>
+<body>
+
+	<form action="/user/modify/" method="post">
+		{% if error %}
+			<span style="color:red">{{error}}</span>
+		{% endif %}
+		<input type="hidden" name="id" value="{{id}}"/>
+		<label>用户名:</label><input type="text" name="username" value="{{username}}"/>
+		<label>年龄:</label><input type="text" name="age" value="{{age}}"/>
+		<label>密码:</label><input type="password" name="password" values="{{password}}"/>
+		<input type="submit" value="保存"/>
+	</form>
+</body>
+</html> -->

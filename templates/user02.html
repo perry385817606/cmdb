@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}CMDB 用户管理 {% endblock %}
+
+{% block link %}
+    <!-- Data Tables -->
+    <link href="/static/sfv/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/static/sfv/css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet">
+    <link href="/static/sfv/css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block nav_users %}class="active"{% endblock %}
+{% block nav_users_list %}class="active"{% endblock %}
+{% block breadcrumb %}
+    <li>
+        <a href="javascript:void(0)">用户</a>
+    </li>
+    <li class="active">
+        <strong>用户管理</strong>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <a href="/user/add/" class="btn btn-primary active" role="button">添加用户</a>
+    <a href="/log/" class="btn btn-primary active" role="button">查看日志</a>
+    <a href="/machine_room" class="btn btn-primary active" role="button">查看机房</a>
+    <br><br>
+    <table class="users table-bordered table-hover table-condensed">
+    	<thead>
+    		<tr>
+    			<!-- <th>ID</th> -->
+    			<th>姓名</th>
+    			<th>年龄</th>
+                <th>密码</th>
+                <th>部门</th>
+                <th>性别</th>
+                <th>爱好</th>
+                <th>简介</th>
+                <th>主页</th>
+                <th>生日</th>
+    			<th>邮箱</th>
+    			<th>操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for user in users %}
+    		<tr class="active">
+    			<!-- <td>{{user['id']}}</td> -->
+    			<td>{{user['name']}}</td>
+                <td>{{user['age']}}</td>
+                <td>{{user['password']}}</td>
+                <td>{{user['department']}}</td>
+                <td>{{user['sex']}}</td>
+                <td>{{user['hobby']}}</td>
+                <td>{{user['detail']}}</td>
+                <td>{{user['homepage']}}</td>
+                <td>{{user['birthday']}}</td>
+    			<td>{{user['eamil']}}</td>
+    <!-- 					<td>********</td> -->
+    			<td>
+    				<a href="/user/view/?id={{user['id']}}">编辑</a>
+    				<a href="/user/delete/?id={{user['id']}}">删除</a>
+    			</td>
+    		{% endfor %}
+    		</tr>
+    	</tbody>
+    </table>	
+{% endblock %}
+
+{% block script %}
+    <script src="/static/sfv/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="/static/sfv/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="/static/sfv/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="/static/sfv/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+{% endblock %}
+
+{% block js %}
+jQuery(document).ready(function() {
+    jQuery('.users').dataTable({
+        responsive: true,
+        "dom": 'T<"clear">lfrtip',
+        "tableTools": {
+            "sSwfPath": "/static/sfv/js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
+        }
+    });
+});
+{% endblock %}

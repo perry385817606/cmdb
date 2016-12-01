@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}CMDB | 机房管理{% endblock %}
+
+{% block nav_users %}class="active"{% endblock %}
+
+{% block nav_users_list %}class="active"{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="javascript:void(0)">机房</a>
+    </li>
+    <li>
+        <a href="javascript:void(0)">机房管理</a>
+    </li>
+    <li class="active">
+        <strong>添加机房</strong>
+    </li>
+{% endblock %}
+
+
+
+{% block content %}
+<form method="post" class="form-horizontal" action="/machine_room/save/" method="get">
+	<div class="form-group"><label class="col-sm-2 control-label">机房名称:</label>
+	    <div class="col-sm-10">
+	    	<input type="text" class="form-control" type="text" name="name" values="{{name}}">
+	    </div>
+	</div>
+
+	<div class="form-group"><label class="col-sm-2 control-label">机房地址:</label>
+	    <div class="col-sm-10">
+	    	<input type="text" class="form-control" type="text" name="addr" values="{{addr}}">
+	    </div>
+	</div>
+
+	<div class="form-group"><label class="col-sm-2 control-label">IP网段:</label>
+	    <div class="col-sm-10">
+	    	<input type="text" class="form-control" type="text" name="ip_ranges" values="{{ip_ranges}}">
+	    </div>
+	</div>
+
+		{% if error %}
+			<span style="color:red">{{error}}</span>
+		{% endif %}
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="form-group">
+    	<div class="col-sm-4 col-sm-offset-2">
+            <button class="btn btn-primary" type="submit">添加</button>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}
